@@ -1,4 +1,4 @@
-
+// removeEventListener problem was that I set currentTool as a string, giving only function name
 const container = document.querySelector(".grid-container");
 let gridNumber = 16;
 const gridButton = document.querySelector(".grid-button");
@@ -22,7 +22,7 @@ let randomColor;
  
 
 
-generateGrid(gridNumber, currentTool, backgroundColor);
+generateGrid(gridNumber, currentTool);
 function generateGrid(gridNumber, func = "default") {
     for (let i = 0; i < gridNumber; i++) {
         const row = document.createElement("div");
@@ -35,11 +35,7 @@ function generateGrid(gridNumber, func = "default") {
             div.setAttribute("rgbNumber", "255");
             // randomColor.addEventListener("click", generateRandomColor);
             
-          
             pickColor(div, func);
-            
-
-            // pickColor(div, func);
 
            
             row.appendChild(div);
@@ -93,7 +89,6 @@ function generateGrayScale(e){
 }
 
 function erase(e){
-    console.log("erase")
     e.target.style.backgroundColor = backgroundColor;
 }
 
@@ -107,6 +102,10 @@ function generateGridColor(e){
  function changeColor(e){
     e.target.style.backgroundColor = colorPicker.value;  
  }
+
+ function changeToBlack(e){
+    e.target.style.backgroundColor = "black";
+}
 
 
 rainbowButton.addEventListener("click", () => {
@@ -151,21 +150,24 @@ changeColorButton.addEventListener("click", () => {
 
 gridColorButton.addEventListener("click", generateGridColor);
 
+
+
 function pickColor(div, func){
 
    
     console.log(func);
     switch (func) {
-        case "generateRandomColor":
+        case generateRandomColor:
+            console.log(true);
             div.addEventListener("mouseover", generateRandomColor);
             break;
-        case "generateGrayScale":
+        case generateGrayScale:
             div.addEventListener("mouseover", generateGrayScale);
             break;
-        case "erase":
+        case erase:
             div.addEventListener("mouseover", erase);
             break;
-        case "changeColor":
+        case changeColor:
             div.addEventListener("mouseover", changeColor);
             break;
         default:
@@ -173,7 +175,4 @@ function pickColor(div, func){
     }
 }
 
-function changeToBlack(e){
-    e.target.style.backgroundColor = "green";
-}
 
