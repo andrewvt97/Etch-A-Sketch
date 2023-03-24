@@ -15,5 +15,6 @@ h1 {
 
 .row {
     display: flex;
+    justify-content: center;
     
 }
