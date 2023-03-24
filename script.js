@@ -5,6 +5,8 @@ const gridButton = document.querySelector(".grid-button");
 const clearButton = document.querySelector(".clear-button");
 const randomColorButton = document.querySelector(".random-button");
 const grayScaleButton = document.querySelector(".grayscale-button");
+const eraseButton = document.querySelector(".erase-button");
+
 const gridSpace = 200;
 let backgroundColor = "green";
 // let rgbNumber = 255;
@@ -23,9 +25,6 @@ function generateGrid(gridNumber, func = "default") {
             div.setAttribute("rgbNumber", "255");
             let rgbNumber = 255;
             // randomColor.addEventListener("click", generateRandomColor);
-            div.addEventListener("mouseover", (e) => {
-                            e.target.style.backgroundColor = "black";
-                        });
             pickColor(div, func);
             // div.addEventListener("mouseover", generateRandomColor);
             // div.addEventListener("mouseover", generateGrayScale);
@@ -85,6 +84,10 @@ function generateGrayScale(e){
     e.target.setAttribute("rgbNumber", rgbNumber);
 }
 
+function erase(e){
+    e.target.style.backgroundColor = backgroundColor;
+}
+
 function pickColor(div, func){
     div.addEventListener("mouseover", (e) => {
         e.target.style.backgroundColor = "black";
@@ -96,6 +99,10 @@ function pickColor(div, func){
 
     grayScaleButton.addEventListener("click", (e) => {
         div.addEventListener("mouseover", generateGrayScale);
+    });
+
+    eraseButton.addEventListener("click", (e) => {
+        div.addEventListener("mouseover", erase);
     });
 
     // grayScaleButton.addEventListener("click", generateGrayScale);
