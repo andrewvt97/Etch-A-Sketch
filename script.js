@@ -28,7 +28,11 @@ gridButton.addEventListener("click", (e) => {
     // for (let i = 0; i < gridNumber; i++) {
     //     container.removeChild(container.lastChild);
     // }
-    gridNumber = prompt("How many squares per side?");
+    do{
+        gridNumber = prompt("what number grid would you like? Enter a number between 1 and 100");
+    }
+    while (gridNumber < 1 || gridNumber > 100);
+   
     const count = container.childElementCount;
     for (let i = 0; i < count; i++) { // this does not work because container.childElementCount is going down when you remove children
         container.removeChild(container.lastChild);
