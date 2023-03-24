@@ -6,13 +6,14 @@ const clearButton = document.querySelector(".clear-button");
 const randomColorButton = document.querySelector(".random-button");
 const grayScaleButton = document.querySelector(".grayscale-button");
 const eraseButton = document.querySelector(".erase-button");
+let currentFunction = "default";
 
 const gridSpace = 200;
 let backgroundColor = "green";
 // let rgbNumber = 255;
 let randomColor;
 
-generateGrid(gridNumber);
+generateGrid(gridNumber, currentFunction);
 function generateGrid(gridNumber, func = "default") {
     for (let i = 0; i < gridNumber; i++) {
         const row = document.createElement("div");
@@ -23,8 +24,9 @@ function generateGrid(gridNumber, func = "default") {
             div.style.padding = `${gridSpace/gridNumber}px`;
             div.classList.add("grid");
             div.setAttribute("rgbNumber", "255");
-            let rgbNumber = 255;
             // randomColor.addEventListener("click", generateRandomColor);
+            console.log(currentFunction);
+
             pickColor(div, func);
             // div.addEventListener("mouseover", generateRandomColor);
             // div.addEventListener("mouseover", generateGrayScale);
@@ -47,7 +49,7 @@ gridButton.addEventListener("click", (e) => {
     while (gridNumber < 1 || gridNumber > 100);
    
     removeGrid();
-    generateGrid(gridNumber);
+    generateGrid(gridNumber, currentFunction);
 });
 
 // function to clear the grid
@@ -58,7 +60,7 @@ clearButton.addEventListener("click", (e) => {
     //     element.style.rgbNumber = "255";
     // });
     removeGrid();
-    generateGrid(gridNumber);
+    generateGrid(gridNumber, currentFunction);
 });
 
 // function to remove all grid elements
@@ -89,35 +91,39 @@ function erase(e){
 }
 
 function pickColor(div, func){
-    div.addEventListener("mouseover", (e) => {
-        e.target.style.backgroundColor = "black";
-    });
 
     randomColorButton.addEventListener("click", (e) => {
         div.addEventListener("mouseover", generateRandomColor);
+        currentFunction = "generateRandomColor";
     });
 
     grayScaleButton.addEventListener("click", (e) => {
         div.addEventListener("mouseover", generateGrayScale);
+        currentFunction = "generateGrayScale";
     });
 
     eraseButton.addEventListener("click", (e) => {
         div.addEventListener("mouseover", erase);
+        currentFunction = "erase";
     });
 
     // grayScaleButton.addEventListener("click", generateGrayScale);
 
-    // switch (func) {
-    //     case "generateRandomColor":
-    //         div.addEventListener("mouseover", generateRandomColor);
-    //         break;
-    //     case "generateGrayScale":
-    //         div.addEventListener("mouseover", generateGrayScale);
-    //         break;
-    //     default:
-    //         div.addEventListener("mouseover", (e) => {
-    //             e.target.style.backgroundColor = "black";
-    //         });
 
-    // }
+    switch (func) {
+        case "generateRandomColor":
+            div.addEventListener("mouseover", generateRandomColor);
+            break;
+        case "generateGrayScale":
+            div.addEventListener("mouseover", generateGrayScale);
+            break;
+        case "erase":
+            div.addEventListener("mouseover", erase);
+            break;
+        default:
+            div.addEventListener("mouseover", (e) => {
+                e.target.style.backgroundColor = "black";
+            });
+
+    }
 }
