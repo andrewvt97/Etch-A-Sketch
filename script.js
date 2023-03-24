@@ -1,7 +1,8 @@
 // removeEventListener problem was that I set currentTool as a string, giving only function name
 const container = document.querySelector(".grid-container");
-let gridNumber = 16;
-const gridButton = document.querySelector(".grid-button");
+let slider = document.querySelector(".slider");
+let gridNumber = slider.value;
+
 const clearButton = document.querySelector(".clear-button");
 const rainbowButton = document.querySelector(".rainbow-button");
 const grayScaleButton = document.querySelector(".grayscale-button");
@@ -11,7 +12,9 @@ let gridColorPicker = document.querySelector('#grid-color-picker');
 let colorPicker = document.querySelector('#color-picker');
 const changeColorButton = document.querySelector(".color-button");
 let currentTool = changeToBlack;
-let previousTool;
+// let gridNum = document.querySelector(".slider").value;
+let pixelSizeDescription = document.querySelector(".pixel-size");
+
 
 const gridSpace = 200;
 let backgroundColor = "white";
@@ -49,15 +52,21 @@ function generateRandomColor(e){
     e.target.style.backgroundColor = `#${randomColor}`;
 }
 
-gridButton.addEventListener("click", (e) => {
-    do{
-        gridNumber = prompt("what number grid would you like? Enter a number between 1 and 64");
-    }
-    while (gridNumber < 1 || gridNumber > 64);
-   
+slider.oninput = function() {
+    gridNumber = this.value;
+    pixelSizeDescription.textContent = `${gridNumber} x ${gridNumber}`;
     removeGrid();
     generateGrid(gridNumber, currentTool);
-});
+  }
+// gridButton.addEventListener("click", (e) => {
+//     do{
+//         gridNumber = prompt("what number grid would you like? Enter a number between 1 and 64");
+//     }
+//     while (gridNumber < 1 || gridNumber > 64);
+   
+//     removeGrid();
+//     generateGrid(gridNumber, currentTool);
+// });
 
 // function to clear the grid
 clearButton.addEventListener("click", (e) => {
@@ -154,11 +163,8 @@ gridColorButton.addEventListener("click", generateGridColor);
 
 function pickColor(div, func){
 
-   
-    console.log(func);
     switch (func) {
         case generateRandomColor:
-            console.log(true);
             div.addEventListener("mouseover", generateRandomColor);
             break;
         case generateGrayScale:
