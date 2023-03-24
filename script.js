@@ -14,8 +14,12 @@ function generateGrid(gridNumber) {
             // div.setAttribute("style", `background-color: green; padding: ${gridSpace/gridNumber} px;`)
             div.style.padding = `${gridSpace/gridNumber}px`;
             div.classList.add("grid");
+            // let randomColor = Math.floor(Math.random()*16777215).toString(16); // random color
+            let rgbNumber = 255;
             div.addEventListener("mouseover", (e) => {
-                e.target.style.backgroundColor = "black";
+                // e.target.style.backgroundColor = `#${randomColor}`; // random color
+                e.target.style.backgroundColor = `rgb(${rgbNumber}, ${rgbNumber}, ${rgbNumber})`;
+                rgbNumber -= 0.1 * 255;
             });
             row.appendChild(div);
         }
