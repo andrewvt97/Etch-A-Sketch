@@ -2,7 +2,9 @@
 const container = document.querySelector(".grid-container");
 let gridNumber = 16;
 const gridButton = document.querySelector(".grid-button");
+const clearButton = document.querySelector(".clear-button");
 const gridSpace = 200;
+let backgroundColor = "green";
 
 generateGrid(gridNumber);
 function generateGrid(gridNumber) {
@@ -29,18 +31,29 @@ function generateGrid(gridNumber) {
 
 
 gridButton.addEventListener("click", (e) => {
-    // for (let i = 0; i < gridNumber; i++) {
-    //     container.removeChild(container.lastChild);
-    // }
     do{
         gridNumber = prompt("what number grid would you like? Enter a number between 1 and 100");
     }
     while (gridNumber < 1 || gridNumber > 100);
    
-    const count = container.childElementCount;
-    for (let i = 0; i < count; i++) { // this does not work because container.childElementCount is going down when you remove children
-        container.removeChild(container.lastChild);
-    }
+    removeGrid();
     generateGrid(gridNumber);
 });
+
+clearButton.addEventListener("click", (e) => {
+    const grid = document.querySelectorAll(".grid");
+    grid.forEach((element) => {
+        element.style.backgroundColor = backgroundColor;
+    });
+});
+
+// function to remove all grid elements
+function removeGrid() { 
+    const count = container.childElementCount;
+    for (let i = 0; i < count; i++) { // container.childElementCount is going down when you remove children so variable was needed
+        container.removeChild(container.lastChild);
+    }
+}
+
+
 
