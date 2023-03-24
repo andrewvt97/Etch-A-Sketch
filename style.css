@@ -1,5 +1,19 @@
-#grid {
-    display: grid;
-    grid-template-columns: repeat(16, 1fr);
+h1 {
+    text-align: center;
+}
+
+/* .grid-container {
+    display: flex;
+    justify-content: center;
     background-color: green;
+} */
+
+.grid {
+    background-color: green;
+
+}
+
+.row {
+    display: flex;
+    
 }
