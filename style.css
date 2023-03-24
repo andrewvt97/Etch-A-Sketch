@@ -54,6 +54,8 @@ button {
     /* cursor: pointer; */
 }
 
+
+#grid-color-picker,
 #color-picker {
   
     /* border: 2px solid black; */
@@ -69,8 +71,15 @@ button {
     /* cursor: pointer; */
 }
 
+.color-button,
 .grid-color-button {
     display: flex;
     align-items: center;
     gap: 5px;
+    justify-content: center;
+    padding: 7px 30px;
 }
+/* 
+.color-button {
+    gap: 10px;
+} */

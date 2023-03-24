@@ -7,6 +7,7 @@ const rainbowButton = document.querySelector(".rainbow-button");
 const grayScaleButton = document.querySelector(".grayscale-button");
 const eraseButton = document.querySelector(".erase-button");
 const gridColorButton = document.querySelector(".grid-color-button")
+let gridColorPicker = document.querySelector('#grid-color-picker');
 let colorPicker = document.querySelector('#color-picker');
 const changeColorButton = document.querySelector(".color-button");
 let currentTool = "default";
@@ -92,12 +93,15 @@ function erase(e){
 }
 
 function generateGridColor(e){
-    backgroundColor = colorPicker.value;
+    backgroundColor = gridColorPicker.value;
     for (row of container.children)
         for (div of row.children)
             div.style.backgroundColor = backgroundColor;
 }
 
+ function changeColor(e){
+    e.target.style.backgroundColor = colorPicker.value;  
+ }
 
 function pickColor(div, func){
 
@@ -116,6 +120,11 @@ function pickColor(div, func){
         currentTool = "erase";
     });
 
+    changeColorButton.addEventListener("click", (e) => {
+        div.addEventListener("mouseover", changeColor);
+        currentTool = "changeColor";
+    });
+
     gridColorButton.addEventListener("click", generateGridColor);
     // grayScaleButton.addEventListener("click", generateGrayScale);
 
@@ -130,8 +139,12 @@ function pickColor(div, func){
         case "erase":
             div.addEventListener("mouseover", erase);
             break;
-        case "generateGridColor":
-            div.addEventListener("mouseover", generateGridColor);
+        // case "generateGridColor":
+        //     div.addEventListener("mouseover", generateGridColor);
+        //     break;
+        case "changeColor":
+            div.addEventListener("mouseover", changeColor);
+            break;
         default:
             div.addEventListener("mouseover", (e) => {
                 e.target.style.backgroundColor = "black";
