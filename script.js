@@ -10,7 +10,8 @@ const gridColorButton = document.querySelector(".grid-color-button")
 let gridColorPicker = document.querySelector('#grid-color-picker');
 let colorPicker = document.querySelector('#color-picker');
 const changeColorButton = document.querySelector(".color-button");
-let currentTool = "default";
+let currentTool = changeToBlack;
+let previousTool;
 
 const gridSpace = 200;
 let backgroundColor = "white";
@@ -34,15 +35,23 @@ function generateGrid(gridNumber, func = "default") {
             div.setAttribute("rgbNumber", "255");
             // randomColor.addEventListener("click", generateRandomColor);
             
-
-            pickColor(div, func);
           
+            pickColor(div, func);
+            
+
+            // pickColor(div, func);
+
+           
             row.appendChild(div);
         }
         container.appendChild(row);
     }
 }
 
+function generateRandomColor(e){
+    randomColor = Math.floor(Math.random()*16777215).toString(16);
+    e.target.style.backgroundColor = `#${randomColor}`;
+}
 
 gridButton.addEventListener("click", (e) => {
     do{
@@ -74,14 +83,9 @@ function removeGrid() {
     }
 }
 
-function generateRandomColor(e){
-    randomColor = Math.floor(Math.random()*16777215).toString(16);
-    e.target.style.backgroundColor = `#${randomColor}`;
-}
 
-// rainbowButton.addEventListener("click", generateRandomColor);
-// grayScaleButton.addEventListener("click", generateGrayScale);
 function generateGrayScale(e){
+    
     rgbNumber = e.target.getAttribute("rgbNumber");
     e.target.style.backgroundColor = `rgb(${rgbNumber}, ${rgbNumber}, ${rgbNumber})`;
     rgbNumber -= 0.1 * 255;
@@ -89,6 +93,7 @@ function generateGrayScale(e){
 }
 
 function erase(e){
+    console.log("erase")
     e.target.style.backgroundColor = backgroundColor;
 }
 
@@ -103,32 +108,53 @@ function generateGridColor(e){
     e.target.style.backgroundColor = colorPicker.value;  
  }
 
+
+rainbowButton.addEventListener("click", () => {
+    for (row of container.children)
+        for (div of row.children){
+            div.removeEventListener("mouseover", currentTool);
+            div.addEventListener("mouseover", generateRandomColor);
+        }
+    currentTool = generateRandomColor;
+});
+
+grayScaleButton.addEventListener("click", () => {
+    for (row of container.children){
+        for (div of row.children){
+            div.removeEventListener("mouseover", currentTool);
+            div.addEventListener("mouseover", generateGrayScale);
+        }
+    }
+    currentTool = generateGrayScale;
+});
+
+
+eraseButton.addEventListener("click", () => {
+    for (row of container.children){
+        for (div of row.children){
+            div.removeEventListener("mouseover", currentTool);
+            div.addEventListener("mouseover", erase);
+        }
+    }
+    currentTool = erase;
+});
+
+changeColorButton.addEventListener("click", () => {
+    for (row of container.children){
+        for (div of row.children){
+            div.removeEventListener("mouseover", currentTool);
+            div.addEventListener("mouseover", changeColor);
+        }
+    }
+    currentTool = changeColor;
+});
+
+gridColorButton.addEventListener("click", generateGridColor);
+
 function pickColor(div, func){
 
-    rainbowButton.addEventListener("click", (e) => {
-        div.addEventListener("mouseover", generateRandomColor);
-        currentTool = "generateRandomColor";
-    });
-
-    grayScaleButton.addEventListener("click", (e) => {
-        div.addEventListener("mouseover", generateGrayScale);
-        currentTool = "generateGrayScale";
-    });
-
-    eraseButton.addEventListener("click", (e) => {
-        div.addEventListener("mouseover", erase);
-        currentTool = "erase";
-    });
-
-    changeColorButton.addEventListener("click", (e) => {
-        div.addEventListener("mouseover", changeColor);
-        currentTool = "changeColor";
-    });
-
-    gridColorButton.addEventListener("click", generateGridColor);
-    // grayScaleButton.addEventListener("click", generateGrayScale);
-
-
+   
+    console.log(func);
     switch (func) {
         case "generateRandomColor":
             div.addEventListener("mouseover", generateRandomColor);
@@ -139,16 +165,15 @@ function pickColor(div, func){
         case "erase":
             div.addEventListener("mouseover", erase);
             break;
-        // case "generateGridColor":
-        //     div.addEventListener("mouseover", generateGridColor);
-        //     break;
         case "changeColor":
             div.addEventListener("mouseover", changeColor);
             break;
         default:
-            div.addEventListener("mouseover", (e) => {
-                e.target.style.backgroundColor = "black";
-            });
-
+            div.addEventListener("mouseover", changeToBlack);
     }
 }
+
+function changeToBlack(e){
+    e.target.style.backgroundColor = "green";
+}
+
