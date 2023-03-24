@@ -3,17 +3,24 @@ const container = document.querySelector(".grid-container");
 let gridNumber = 16;
 const gridButton = document.querySelector(".grid-button");
 const clearButton = document.querySelector(".clear-button");
-const randomColorButton = document.querySelector(".random-button");
+const rainbowButton = document.querySelector(".rainbow-button");
 const grayScaleButton = document.querySelector(".grayscale-button");
 const eraseButton = document.querySelector(".erase-button");
-let currentFunction = "default";
+const gridColorButton = document.querySelector(".grid-color-button")
+let colorPicker = document.querySelector('#color-picker');
+const changeColorButton = document.querySelector(".color-button");
+let currentTool = "default";
 
 const gridSpace = 200;
-let backgroundColor = "green";
+let backgroundColor = "white";
 // let rgbNumber = 255;
 let randomColor;
 
-generateGrid(gridNumber, currentFunction);
+
+ 
+
+
+generateGrid(gridNumber, currentTool, backgroundColor);
 function generateGrid(gridNumber, func = "default") {
     for (let i = 0; i < gridNumber; i++) {
         const row = document.createElement("div");
@@ -22,19 +29,13 @@ function generateGrid(gridNumber, func = "default") {
             const div = document.createElement("div");
             // div.setAttribute("style", `background-color: green; padding: ${gridSpace/gridNumber} px;`)
             div.style.padding = `${gridSpace/gridNumber}px`;
-            div.classList.add("grid");
+            div.style.backgroundColor = backgroundColor;
             div.setAttribute("rgbNumber", "255");
             // randomColor.addEventListener("click", generateRandomColor);
-            console.log(currentFunction);
+            
 
             pickColor(div, func);
-            // div.addEventListener("mouseover", generateRandomColor);
-            // div.addEventListener("mouseover", generateGrayScale);
-            // div.addEventListener("mouseover", (e) => {
-            //     // e.target.style.backgroundColor = `#${randomColor}`; // random color
-            //     // e.target.style.backgroundColor = `rgb(${rgbNumber}, ${rgbNumber}, ${rgbNumber})`;
-            //     // rgbNumber -= 0.1 * 255;
-            // });
+          
             row.appendChild(div);
         }
         container.appendChild(row);
@@ -44,12 +45,12 @@ function generateGrid(gridNumber, func = "default") {
 
 gridButton.addEventListener("click", (e) => {
     do{
-        gridNumber = prompt("what number grid would you like? Enter a number between 1 and 100");
+        gridNumber = prompt("what number grid would you like? Enter a number between 1 and 64");
     }
-    while (gridNumber < 1 || gridNumber > 100);
+    while (gridNumber < 1 || gridNumber > 64);
    
     removeGrid();
-    generateGrid(gridNumber, currentFunction);
+    generateGrid(gridNumber, currentTool);
 });
 
 // function to clear the grid
@@ -60,7 +61,7 @@ clearButton.addEventListener("click", (e) => {
     //     element.style.rgbNumber = "255";
     // });
     removeGrid();
-    generateGrid(gridNumber, currentFunction);
+    generateGrid(gridNumber, currentTool);
 });
 
 // function to remove all grid elements
@@ -77,7 +78,7 @@ function generateRandomColor(e){
     e.target.style.backgroundColor = `#${randomColor}`;
 }
 
-// randomColorButton.addEventListener("click", generateRandomColor);
+// rainbowButton.addEventListener("click", generateRandomColor);
 // grayScaleButton.addEventListener("click", generateGrayScale);
 function generateGrayScale(e){
     rgbNumber = e.target.getAttribute("rgbNumber");
@@ -90,23 +91,32 @@ function erase(e){
     e.target.style.backgroundColor = backgroundColor;
 }
 
+function generateGridColor(e){
+    backgroundColor = colorPicker.value;
+    for (row of container.children)
+        for (div of row.children)
+            div.style.backgroundColor = backgroundColor;
+}
+
+
 function pickColor(div, func){
 
-    randomColorButton.addEventListener("click", (e) => {
+    rainbowButton.addEventListener("click", (e) => {
         div.addEventListener("mouseover", generateRandomColor);
-        currentFunction = "generateRandomColor";
+        currentTool = "generateRandomColor";
     });
 
     grayScaleButton.addEventListener("click", (e) => {
         div.addEventListener("mouseover", generateGrayScale);
-        currentFunction = "generateGrayScale";
+        currentTool = "generateGrayScale";
     });
 
     eraseButton.addEventListener("click", (e) => {
         div.addEventListener("mouseover", erase);
-        currentFunction = "erase";
+        currentTool = "erase";
     });
 
+    gridColorButton.addEventListener("click", generateGridColor);
     // grayScaleButton.addEventListener("click", generateGrayScale);
 
 
@@ -120,6 +130,8 @@ function pickColor(div, func){
         case "erase":
             div.addEventListener("mouseover", erase);
             break;
+        case "generateGridColor":
+            div.addEventListener("mouseover", generateGridColor);
         default:
             div.addEventListener("mouseover", (e) => {
                 e.target.style.backgroundColor = "black";

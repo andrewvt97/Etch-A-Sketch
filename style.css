@@ -31,13 +31,14 @@ h1 {
     display: flex;
     justify-content: center;
     gap: 20px;
+    align-items: center;
 }
 
 .button-container {
     display: flex;
     justify-content: center;
     flex-direction: column;
-    gap: 20px;
+    gap: 10px;
     padding: 20px;
 }
 
@@ -49,7 +50,27 @@ button {
     border: 2px solid black;
     border-radius: 10px;
     padding: 10px 30px;
-    border: solid 5px #138484;
+    border: solid 7px #138484;
     /* cursor: pointer; */
 }
 
+#color-picker {
+  
+    /* border: 2px solid black; */
+    
+    padding: 0;
+    margin: 0;
+    border: 0;
+    background-color: transparent;
+    
+    
+    /* opacity: 10; */
+    
+    /* cursor: pointer; */
+}
+
+.grid-color-button {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
