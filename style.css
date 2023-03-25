@@ -8,8 +8,8 @@ body {
 
 h1 {
     text-align: center;
-    padding: 0;
-    margin: 0;
+    /* padding: 0;
+    margin: 0; */
 }
 
 /* .grid-container {
@@ -90,6 +90,10 @@ button {
     padding: 0;
     margin: 0;
     /* padding: 20px; */
+}
+
+.pixel-size {
+    font-weight: bold;
 }
 /* 
 .color-button {
