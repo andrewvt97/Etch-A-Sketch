@@ -5,6 +5,7 @@ const container = document.querySelector(".grid-container");
 let slider = document.querySelector(".slider");
 let gridNumber = slider.value;
 const gridSpace = 200; // amount of space for the grid
+const horizontalSpace = 300; // horizontal length of grid;
 
 // buttons
 const clearButton = document.querySelector(".clear-button");
@@ -33,7 +34,7 @@ function generateGrid(gridNumber, func = "default") {
         row.classList.add("row");
         for (let j = 0; j < gridNumber; j++) {
             const div = document.createElement("div");
-            div.setAttribute("style", `background-color: ${gridColorPicker.value}; padding: ${gridSpace/gridNumber}px`);
+            div.setAttribute("style", `background-color: ${gridColorPicker.value}; padding: ${gridSpace/gridNumber}px ${horizontalSpace/gridNumber}px`);
             div.setAttribute("rgbNumber", "255");
             
             pickColor(div, func);  // chooses correct drawing tool when creating the grid 
@@ -122,7 +123,8 @@ changeColorButton.addEventListener("click", () => {
 });
 
 // function to change the color of the grid
-gridColorButton.addEventListener("click", generateGridColor);
+// gridColorButton.addEventListener("click", generateGridColor);
+gridColorPicker.addEventListener("change", generateGridColor);
 
 // traverse the grid and add relevant event listeners to every div
 function traverseGrid(func) {
@@ -155,4 +157,5 @@ function pickColor(div, func){
     }
 }
 
+// consider for the future only allowing change color buttons when button is clicked and not on change
 
