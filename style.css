@@ -4,19 +4,12 @@ body {
     font-family: Arial, Helvetica, sans-serif;
     font-size: 1.5em;
     text-align: center;
+    user-select: none;
 }
 
 h1 {
     text-align: center;
-    /* padding: 0;
-    margin: 0; */
 }
-
-/* .grid-container {
-    display: flex;
-    justify-content: center;
-    background-color: green;
-} */
 
 .grid {
     background-color: white;
@@ -53,24 +46,20 @@ button {
     border-radius: 10px;
     padding: 10px 30px;
     border: solid 7px #138484;
-    /* cursor: pointer; */
+
 }
 
 
 #grid-color-picker,
 #color-picker {
   
-    /* border: 2px solid black; */
+   
     
     padding: 0;
     margin: 0;
     border: 0;
     background-color: transparent;
     
-    
-    /* opacity: 10; */
-    
-    /* cursor: pointer; */
 }
 
 .color-button,
@@ -89,14 +78,11 @@ button {
     gap: 10px;
     padding: 0;
     margin: 0;
-    /* padding: 20px; */
+
 }
 
 .slider-description
 .pixel-size {
     font-weight: bold;
 }
-/* 
-.color-button {
-    gap: 10px;
-} */
+

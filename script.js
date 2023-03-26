@@ -23,6 +23,7 @@ let colorPicker = document.querySelector('#color-picker');
 let currentTool = changeToBlack;
 // pixel size description
 let pixelSizeDescription = document.querySelector(".pixel-size");
+let mouseHold = false; // mouse held variable
 
 
 generateGrid(gridNumber, currentTool);
@@ -69,12 +70,14 @@ function removeGrid() {
 
 // generates random color or rainbow effect
 function generateRandomColor(e){
+    if (e.type === "mouseover" && !mouseHold) return;
     const randomColor = Math.floor(Math.random()*16777215).toString(16);
     e.target.style.backgroundColor = `#${randomColor}`;
 }
 
 // function to generate grayscale
 function generateGrayScale(e){    
+    if (e.type === "mouseover" && !mouseHold) return;
     rgbNumber = e.target.getAttribute("rgbNumber");
     e.target.style.backgroundColor = `rgb(${rgbNumber}, ${rgbNumber}, ${rgbNumber})`;
     rgbNumber -= 0.1 * 255;
@@ -83,6 +86,7 @@ function generateGrayScale(e){
 
 // erase function
 function erase(e){ 
+    if (e.type === "mouseover" && !mouseHold) return;
     e.target.style.backgroundColor = gridColorPicker.value;
 }
 
@@ -95,11 +99,13 @@ function generateGridColor(e){
 
 // function to change the color of the drawing tool
  function changeColor(e){
+    if (e.type === "mouseover" && !mouseHold) return;
     e.target.style.backgroundColor = colorPicker.value;  
  }
 
  // default drawing tool
  function changeToBlack(e){
+    if (e.type === "mouseover" && !mouseHold) return;
     e.target.style.backgroundColor = "black";
 }
 
@@ -130,31 +136,23 @@ gridColorPicker.addEventListener("change", generateGridColor);
 function traverseGrid(func) {
     for (row of container.children){
         for (div of row.children){
-            div.removeEventListener("mouseover", currentTool);
-            div.addEventListener("mouseover", func);
+            pickColor(div, func);
         }
     }
     currentTool = func;
 }
 
-function pickColor(div, func){
-    // switch function for picking correct drawing tools if the user changed grid size or reset the grid
-    switch (func) {
-        case generateRandomColor: // adds event listener for every div in the grid
-            div.addEventListener("mouseover", generateRandomColor);
-            break;
-        case generateGrayScale:
-            div.addEventListener("mouseover", generateGrayScale);
-            break;
-        case erase:
-            div.addEventListener("mouseover", erase);
-            break;
-        case changeColor:
-            div.addEventListener("mouseover", changeColor);
-            break;
-        default:
-            div.addEventListener("mouseover", changeToBlack);
-    }
+
+document.body.addEventListener("mouseup", () => {
+    mouseHold = false;
+});
+document.body.addEventListener("mousedown", () => {
+    mouseHold = true;
+});
+
+function pickColor(div, func){  
+    div.addEventListener("mouseover", func);
+    div.addEventListener("click", func);
 }
 
 // consider for the future only allowing change color buttons when button is clicked and not on change
