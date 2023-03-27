@@ -7,6 +7,7 @@ let gridNumber = slider.value;
 const gridSpace = 200; // amount of space for the grid
 const horizontalSpace = 300; // horizontal length of grid;
 
+
 // buttons
 const clearButton = document.querySelector(".clear-button");
 const rainbowButton = document.querySelector(".rainbow-button");
@@ -14,6 +15,8 @@ const grayScaleButton = document.querySelector(".grayscale-button");
 const eraseButton = document.querySelector(".erase-button");
 const gridColorButton = document.querySelector(".grid-color-button")
 const changeColorButton = document.querySelector(".color-button");
+
+let currentButton = changeColorButton;
 
 // color pickers
 let gridColorPicker = document.querySelector('#grid-color-picker');
@@ -43,6 +46,8 @@ function generateGrid(gridNumber, func = "default") {
         }
         container.appendChild(row); // adds row to the container
     }
+
+    currentButton.classList.add("active");
 }
 
 
@@ -112,19 +117,24 @@ function generateGridColor(e){
 
 // button listens for the 4 drawing tool buttons
 rainbowButton.addEventListener("click", () => {
+    console.log("rainbow");
+    currentButton = rainbowButton;
     traverseGrid(generateRandomColor);
 });
 
 grayScaleButton.addEventListener("click", () => {
+    currentButton = grayScaleButton;
     traverseGrid(generateGrayScale);
 });
 
 
 eraseButton.addEventListener("click", () => {
+    currentButton = eraseButton;
     traverseGrid(erase);
 });
 
 changeColorButton.addEventListener("click", () => {
+    currentButton = changeColorButton;
     traverseGrid(changeColor);
 });
 
@@ -134,14 +144,26 @@ gridColorPicker.addEventListener("change", generateGridColor);
 
 // traverse the grid and add relevant event listeners to every div
 function traverseGrid(func) {
+    console.log(true);
     for (row of container.children){
         for (div of row.children){
-            pickColor(div, func);
+            // div.removeEventListener("mouseover", currentTool);
+            // div.removeEventListener("click", currentTool);
+            div.addEventListener("mouseover", func);
+            div.addEventListener("click", func);
         }
     }
     currentTool = func;
+    activeButton();
+
+   
 }
 
+function activeButton(){
+    const button = document.querySelector(".active");
+    button.classList.remove("active");
+    currentButton.classList.add("active");
+}
 
 document.body.addEventListener("mouseup", () => {
     mouseHold = false;

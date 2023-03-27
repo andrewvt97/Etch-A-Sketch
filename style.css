@@ -86,3 +86,13 @@ button {
     font-weight: bold;
 }
 
+.active {
+    background-color: #138484;
+    color: white;
+    font-size: 13px;
+    font-weight: bold;
+    border: 7px solid white;
+    border-radius: 10px;
+    padding: 10px 30px;
+    
+}
