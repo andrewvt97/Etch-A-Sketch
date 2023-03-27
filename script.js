@@ -63,7 +63,15 @@ slider.oninput = function() {
 clearButton.addEventListener("click", (e) => {
     removeGrid();
     generateGrid(gridNumber, currentTool);
+    addBriefAnimation(e.target);
 });
+
+function addBriefAnimation(button){
+    button.classList.add("active");
+    setTimeout(() => {
+        button.classList.remove("active");
+   }, 250);
+}
 
 // function to remove all grid elements
 function removeGrid() { 
@@ -97,6 +105,7 @@ function erase(e){
 
 // function to change the color of the grid
 function generateGridColor(e){
+    addBriefAnimation(gridColorButton);
     for (row of container.children)
         for (div of row.children)
             div.style.backgroundColor = gridColorPicker.value;
@@ -140,7 +149,7 @@ changeColorButton.addEventListener("click", () => {
 });
 
 // function to change the color of the grid
-// gridColorButton.addEventListener("click", generateGridColor);
+
 gridColorPicker.addEventListener("change", generateGridColor);
 
 // traverse the grid and add relevant event listeners to every div
