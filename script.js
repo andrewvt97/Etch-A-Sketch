@@ -23,7 +23,7 @@ let gridColorPicker = document.querySelector('#grid-color-picker');
 let colorPicker = document.querySelector('#color-picker');
 
 // current drawing tool
-let currentTool = changeToBlack;
+let currentTool = changeColor; // default drawing tool
 // pixel size description
 let pixelSizeDescription = document.querySelector(".pixel-size");
 let mouseHold = false; // mouse held variable
@@ -105,14 +105,15 @@ function generateGridColor(e){
 // function to change the color of the drawing tool
  function changeColor(e){
     if (e.type === "mouseover" && !mouseHold) return;
+    console.log(true);
     e.target.style.backgroundColor = colorPicker.value;  
  }
 
- // default drawing tool
- function changeToBlack(e){
-    if (e.type === "mouseover" && !mouseHold) return;
-    e.target.style.backgroundColor = "black";
-}
+//  // default drawing tool
+//  function changeToDefault(e){
+//     if (e.type === "mouseover" && !mouseHold) return;
+//     e.target.style.backgroundColor = "black";
+// }
 
 
 // button listens for the 4 drawing tool buttons
