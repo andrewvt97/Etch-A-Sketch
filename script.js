@@ -147,8 +147,8 @@ function traverseGrid(func) {
     console.log(true);
     for (row of container.children){
         for (div of row.children){
-            // div.removeEventListener("mouseover", currentTool);
-            // div.removeEventListener("click", currentTool);
+            div.removeEventListener("mouseover", currentTool);
+            div.removeEventListener("click", currentTool);
             div.addEventListener("mouseover", func);
             div.addEventListener("click", func);
         }
